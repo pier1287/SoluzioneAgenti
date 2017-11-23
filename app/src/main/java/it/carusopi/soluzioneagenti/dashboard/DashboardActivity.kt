@@ -1,11 +1,18 @@
-package it.carusopi.soluzioneagenti
+package it.carusopi.soluzioneagenti.dashboard
 
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
-import android.support.v7.app.AppCompatActivity
+import it.carusopi.soluzioneagenti.R
+import it.carusopi.soluzioneagenti.base.BaseActivity
+import it.carusopi.soluzioneagenti.dashboard.di.DaggerDashboardComponent
+import it.carusopi.soluzioneagenti.dashboard.di.DashboardModule
 import kotlinx.android.synthetic.main.activity_dashboard.*
+import javax.inject.Inject
 
-class DashboardActivity : AppCompatActivity() {
+class DashboardActivity : BaseActivity(), DashboardContract.View {
+
+    @Inject
+    lateinit var presenter: DashboardContract.Presenter
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -26,5 +33,15 @@ class DashboardActivity : AppCompatActivity() {
         setContentView(R.layout.activity_dashboard)
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+    }
+
+    override fun onActivityInject() {
+        DaggerDashboardComponent.builder()
+                .appComponent(getAppcomponent())
+                .dashboardModule(DashboardModule())
+                .build()
+                .inject(this)
+
+        presenter.attachView(this)
     }
 }
