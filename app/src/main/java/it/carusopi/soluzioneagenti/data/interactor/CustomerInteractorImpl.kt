@@ -10,7 +10,7 @@ import javax.inject.Singleton
  * Created by carusopi on 23/11/2017.
  */
 
-class CustomerInteractorImpl @Inject constructor(private var soluzioneAgentiApiClient: SoluzioneAgentiApiClient) : CustomerInteractor{
+class CustomerInteractorImpl @Inject constructor(private var soluzioneAgentiApiClient: SoluzioneAgentiApiClient) : CustomerInteractor {
 
     private var nextPage: String? = null
 
@@ -22,7 +22,11 @@ class CustomerInteractorImpl @Inject constructor(private var soluzioneAgentiApiC
     }
 
     override fun getMoreCustomers(): Observable<CustomerPage> {
-        return nextPage?.let { next -> soluzioneAgentiApiClient.getCustomers(next) }
-                ?: Observable.just(CustomerPage(emptyList(), null))
+        return nextPage?.let { next ->
+            soluzioneAgentiApiClient.getCustomers(next).map {
+                nextPage = it.nextPage
+                it
+            }
+        } ?: Observable.just(CustomerPage(emptyList(), null))
     }
 }

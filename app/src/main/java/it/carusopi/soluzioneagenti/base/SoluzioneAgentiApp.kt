@@ -24,7 +24,6 @@ class SoluzioneAgentiApp : Application() {
     }
 
     private fun initDagger() {
-//        appComponent = DaggerAppComponent.builder().appModule(AppModule(this)).build()
         appComponent = DaggerAppComponent.builder().appModule(AppModule(this)).build()
     }
 }

@@ -1,8 +1,9 @@
-package it.carusopi.stargazers.data.network.interceptor
+package it.carusopi.soluzioneagenti.data.network.interceptor
 
 import com.google.gson.Gson
 import it.carusopi.soluzioneagenti.data.model.ErrorBody
 import it.carusopi.soluzioneagenti.data.model.exception.HttpErrorException
+import it.carusopi.soluzioneagenti.data.model.exception.HttpForbiddenException
 import it.carusopi.soluzioneagenti.data.model.exception.HttpNotFoundException
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -24,8 +25,9 @@ class HttpErrorInterceptor @Inject constructor(val gson: Gson) : Interceptor {
             val errorBody = gson.fromJson(bodyString, ErrorBody::class.java)
 
             when (response.code()) {
-                404 -> throw HttpNotFoundException(errorBody.message)
-                else -> throw HttpErrorException(errorBody.message, response.code())
+                404 -> throw HttpNotFoundException(errorBody.messageDetail)
+                403 -> throw HttpForbiddenException(errorBody.messageDetail)
+                else -> throw HttpErrorException(errorBody.messageDetail, response.code())
             }
         }
         return response

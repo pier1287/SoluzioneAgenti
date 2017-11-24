@@ -9,7 +9,7 @@ import retrofit2.http.Url
  * Created by carusopi on 23/11/2017.
  */
 interface SoluzioneAgentiApiClient {
-    @GET("/customers")
+    @GET("customers/?format=json")
     fun getCustomers(): Observable<CustomerPage>
 
     @GET()

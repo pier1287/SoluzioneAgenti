@@ -1,4 +1,4 @@
-package it.carusopi.stargazers.commons.recyclerview
+package it.carusopi.soluzioneagenti.commons.recyclerview
 
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager

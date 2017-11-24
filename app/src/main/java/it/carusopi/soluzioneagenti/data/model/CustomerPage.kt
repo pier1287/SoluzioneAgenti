@@ -10,4 +10,5 @@ data class CustomerPage(
         @SerializedName("next") val nextPage: String?){
 
     fun hasNextPage(): Boolean = nextPage != null
+    fun isEmpty(): Boolean = customersList.isEmpty()
 }

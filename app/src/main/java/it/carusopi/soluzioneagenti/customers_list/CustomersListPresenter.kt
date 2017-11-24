@@ -1,0 +1,65 @@
+package it.carusopi.soluzioneagenti.customers_list
+
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
+import it.carusopi.soluzioneagenti.commons.rx.dispose
+import it.carusopi.soluzioneagenti.data.interactor.CustomerInteractor
+import it.carusopi.soluzioneagenti.data.model.CustomerPage
+import it.carusopi.soluzioneagenti.data.model.exception.HttpNotFoundException
+import javax.inject.Inject
+
+/**
+ * Created by carusopi on 23/11/2017.
+ */
+class CustomersListPresenter @Inject constructor(private var customerInteractor: CustomerInteractor): CustomersListContract.Presenter() {
+
+    var getCustomerDisposable: Disposable? = null
+    var getMoreCustomersDisposable: Disposable? = null
+
+    override fun loadCustomers() {
+        getCustomerDisposable = customerInteractor.getCustomers()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        { onGetCustomersListSuccess(it) },
+                        { onGetCustomersListError(it) })
+    }
+
+    private fun onGetCustomersListError(ex: Throwable?) {
+        when (ex) {
+            is HttpNotFoundException -> {
+//                view?.showListError(R.string.err_not_found_list)
+            }
+            else -> {
+//                view?.showListError(R.string.err_generic)
+            }
+        }
+        view?.hideListLoading()
+    }
+
+    private fun onGetCustomersListSuccess(customerPage: CustomerPage) {
+        if (customerPage.isEmpty()){ view?.showListEmpty() }
+        else { 
+            view?.addCustomers(customerPage) 
+            view?.showCustomers()
+        }
+        view?.hideListLoading()
+    }
+
+    override fun loadMoreCustomers() {
+       getMoreCustomersDisposable = customerInteractor.getMoreCustomers()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        { customersPage -> customersPage.let { view?.addCustomers(customersPage) } },
+                        {
+//                            view?.showListError(R.string.err_generic)
+                        })
+    }
+
+    override fun detachView() {
+        super.detachView()
+        dispose(getCustomerDisposable, getMoreCustomersDisposable)
+    }
+}
