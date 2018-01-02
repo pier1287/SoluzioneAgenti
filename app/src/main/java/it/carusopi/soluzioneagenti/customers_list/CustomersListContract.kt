@@ -3,6 +3,7 @@ package it.carusopi.soluzioneagenti.customers_list
 import android.support.annotation.StringRes
 import it.carusopi.soluzioneagenti.base.mvp.BasePresenter
 import it.carusopi.soluzioneagenti.base.mvp.BaseView
+import it.carusopi.soluzioneagenti.data.model.Customer
 import it.carusopi.soluzioneagenti.data.model.CustomerPage
 
 /**
@@ -12,6 +13,7 @@ interface CustomersListContract {
     abstract class Presenter: BasePresenter<View>(){
         abstract fun loadCustomers()
         abstract fun loadMoreCustomers()
+        abstract fun onCustomerSelected(customer: Customer)
     }
 
     interface View: BaseView{
@@ -24,5 +26,6 @@ interface CustomersListContract {
         fun hideListError()
         fun showListEmpty()
         fun hideListEmpty()
+        fun openCustomerDetail()
     }
 }

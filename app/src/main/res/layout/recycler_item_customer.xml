@@ -5,7 +5,6 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardElevation="@dimen/card_view_list_elevation"
-    android:translationZ="3dp"
     android:layout_marginLeft="@dimen/card_view_list_side_margin"
     android:layout_marginRight="@dimen/card_view_list_side_margin"
     app:cardUseCompatPadding="true"

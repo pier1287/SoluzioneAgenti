@@ -4,15 +4,17 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.Menu
 import android.view.View
 import it.carusopi.soluzioneagenti.R
 import it.carusopi.soluzioneagenti.base.BaseActivity
 import it.carusopi.soluzioneagenti.commons.recyclerview.EndlessRecyclerViewScrollListener
+import it.carusopi.soluzioneagenti.customer_detail.CustomerDetailActivity
 import it.carusopi.soluzioneagenti.customers_list.di.CustomersListModule
 import it.carusopi.soluzioneagenti.customers_list.di.DaggerCustomersListComponent
 import it.carusopi.soluzioneagenti.data.model.CustomerPage
 import it.carusopi.soluzioneagenti.list.adapter.CustomersListAdapter
-import kotlinx.android.synthetic.main.activity_dashboard.*
+import kotlinx.android.synthetic.main.activity_customers_list.*
 import javax.inject.Inject
 
 class CustomersListActivity : BaseActivity(), CustomersListContract.View {
@@ -35,7 +37,7 @@ class CustomersListActivity : BaseActivity(), CustomersListContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_dashboard)
+        setContentView(R.layout.activity_customers_list)
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
@@ -44,8 +46,18 @@ class CustomersListActivity : BaseActivity(), CustomersListContract.View {
         presenter.loadCustomers()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.list_menu, menu)
+        return true
+    }
+
     private fun initView() {
+        initToolbar()
         initRecycler()
+    }
+
+    private fun initToolbar() {
+        setSupportActionBar(toolbar)
     }
 
     private fun initRecycler() {
@@ -59,6 +71,7 @@ class CustomersListActivity : BaseActivity(), CustomersListContract.View {
         recyclerCustomers.addOnScrollListener(scrollListener)
 
         customersAdapter = CustomersListAdapter(this)
+        customersAdapter.onCustomerSelectedListener = { presenter.onCustomerSelected(it) }
         recyclerCustomers.adapter = customersAdapter
     }
 
@@ -102,5 +115,9 @@ class CustomersListActivity : BaseActivity(), CustomersListContract.View {
     }
 
     override fun hideListEmpty() {
+    }
+
+    override fun openCustomerDetail() {
+        CustomerDetailActivity.start(this)
     }
 }

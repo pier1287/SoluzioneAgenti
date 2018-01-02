@@ -5,6 +5,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import it.carusopi.soluzioneagenti.commons.rx.dispose
 import it.carusopi.soluzioneagenti.data.interactor.CustomerInteractor
+import it.carusopi.soluzioneagenti.data.model.Customer
 import it.carusopi.soluzioneagenti.data.model.CustomerPage
 import it.carusopi.soluzioneagenti.data.model.exception.HttpNotFoundException
 import javax.inject.Inject
@@ -56,6 +57,10 @@ class CustomersListPresenter @Inject constructor(private var customerInteractor:
                         {
 //                            view?.showListError(R.string.err_generic)
                         })
+    }
+
+    override fun onCustomerSelected(customer: Customer) {
+        view?.openCustomerDetail()
     }
 
     override fun detachView() {

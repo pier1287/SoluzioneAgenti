@@ -18,8 +18,10 @@ import kotlinx.android.synthetic.main.recycler_item_loader.view.*
 /**
  * Created by carusopi on 30/10/2017.
  */
-class CustomersListAdapter(var context: Context) :
+class CustomersListAdapter(private var context: Context) :
         RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    var onCustomerSelectedListener: ((Customer) -> Unit)? = null
 
     private val customersList: MutableList<Customer> = mutableListOf()
     private var hasNextPage = false
@@ -56,7 +58,7 @@ class CustomersListAdapter(var context: Context) :
         notifyDataSetChanged()
     }
 
-    class CustomerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class CustomerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         val user: TextView = itemView.name
         val avatar: SimpleDraweeView = itemView.imgAvatar
@@ -64,11 +66,11 @@ class CustomersListAdapter(var context: Context) :
         fun bind(item: Customer) {
             user.text = item.businessName
             avatar.setImageURI(item.avatarUrl)
+            onCustomerSelectedListener?.let { itemView.setOnClickListener { it(item) } }
         }
     }
 
-    class LoaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class LoaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val progress: ProgressBar = itemView.progressBar
-
     }
 }

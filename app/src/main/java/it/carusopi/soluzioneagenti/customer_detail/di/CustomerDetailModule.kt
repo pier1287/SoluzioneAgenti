@@ -14,7 +14,6 @@ import it.carusopi.soluzioneagenti.data.interactor.CustomerInteractor
 class CustomerDetailModule {
     @Provides
     @ActivityScope
-    internal fun providesCustomerDetailPresenter(interactor: CustomerInteractor): CustomerDetailContract.Presenter {
-        return CustomerDetailPresenter(interactor)
-    }
+    internal fun providesCustomerDetailPresenter(interactor: CustomerInteractor)
+            : CustomerDetailContract.Presenter = CustomerDetailPresenter(interactor)
 }
