@@ -47,6 +47,10 @@ class CustomersListPresenter @Inject constructor(private var customerInteractor:
         view?.openCustomerDetail()
     }
 
+    override fun onAddCustomerClick() {
+        view?.openCustomerModify()
+    }
+
     override fun detachView() {
         super.detachView()
     }

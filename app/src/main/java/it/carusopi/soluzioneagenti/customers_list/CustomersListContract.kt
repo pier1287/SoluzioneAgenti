@@ -14,6 +14,7 @@ interface CustomersListContract {
         abstract fun loadCustomers()
         abstract fun loadMoreCustomers()
         abstract fun onCustomerSelected(customer: Customer)
+        abstract fun onAddCustomerClick()
     }
 
     interface View: BaseView{
@@ -27,5 +28,6 @@ interface CustomersListContract {
         fun showListEmpty()
         fun hideListEmpty()
         fun openCustomerDetail()
+        fun openCustomerModify()
     }
 }

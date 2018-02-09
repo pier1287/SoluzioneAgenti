@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.View
+import com.jakewharton.rxbinding2.view.RxView
 import it.carusopi.soluzioneagenti.R
 import it.carusopi.soluzioneagenti.base.BaseActivity
 import it.carusopi.soluzioneagenti.commons.recyclerview.EndlessRecyclerViewScrollListener
@@ -14,7 +15,9 @@ import it.carusopi.soluzioneagenti.customers_list.di.CustomersListModule
 import it.carusopi.soluzioneagenti.customers_list.di.DaggerCustomersListComponent
 import it.carusopi.soluzioneagenti.data.model.CustomerPage
 import it.carusopi.soluzioneagenti.list.adapter.CustomersListAdapter
+import it.carusopi.soluzioneagenti.customer_modify.CustomerModifyActivity
 import kotlinx.android.synthetic.main.activity_customers_list.*
+import kotlinx.android.synthetic.main.toolbar_standard.*
 import javax.inject.Inject
 
 class CustomersListActivity : BaseActivity(), CustomersListContract.View {
@@ -54,6 +57,7 @@ class CustomersListActivity : BaseActivity(), CustomersListContract.View {
     private fun initView() {
         initToolbar()
         initRecycler()
+        RxView.clicks(fabAdd).subscribe{ presenter.onAddCustomerClick() }
     }
 
     private fun initToolbar() {
@@ -119,5 +123,9 @@ class CustomersListActivity : BaseActivity(), CustomersListContract.View {
 
     override fun openCustomerDetail() {
         CustomerDetailActivity.start(this)
+    }
+
+    override fun openCustomerModify() {
+        CustomerModifyActivity.start(this)
     }
 }
