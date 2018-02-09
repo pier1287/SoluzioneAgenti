@@ -2,6 +2,7 @@ package it.carusopi.soluzioneagenti.base
 
 import android.app.Application
 import com.facebook.drawee.backends.pipeline.Fresco
+import io.realm.Realm
 import it.carusopi.soluzioneagenti.base.di.component.AppComponent
 import it.carusopi.soluzioneagenti.base.di.component.DaggerAppComponent
 import it.carusopi.soluzioneagenti.base.di.module.AppModule
@@ -21,6 +22,7 @@ class SoluzioneAgentiApp : Application() {
         super.onCreate()
         Fresco.initialize(this)
         initDagger()
+        Realm.init(this);
     }
 
     private fun initDagger() {

@@ -15,16 +15,7 @@ import javax.inject.Inject
  */
 class CustomersListPresenter @Inject constructor(private var customerInteractor: CustomerInteractor): CustomersListContract.Presenter() {
 
-    var getCustomerDisposable: Disposable? = null
-    var getMoreCustomersDisposable: Disposable? = null
-
     override fun loadCustomers() {
-        getCustomerDisposable = customerInteractor.getCustomers()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        { onGetCustomersListSuccess(it) },
-                        { onGetCustomersListError(it) })
     }
 
     private fun onGetCustomersListError(ex: Throwable?) {
@@ -49,14 +40,7 @@ class CustomersListPresenter @Inject constructor(private var customerInteractor:
     }
 
     override fun loadMoreCustomers() {
-       getMoreCustomersDisposable = customerInteractor.getMoreCustomers()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        { customersPage -> customersPage.let { view?.addCustomers(customersPage) } },
-                        {
-//                            view?.showListError(R.string.err_generic)
-                        })
+
     }
 
     override fun onCustomerSelected(customer: Customer) {
@@ -65,6 +49,5 @@ class CustomersListPresenter @Inject constructor(private var customerInteractor:
 
     override fun detachView() {
         super.detachView()
-        dispose(getCustomerDisposable, getMoreCustomersDisposable)
     }
 }
