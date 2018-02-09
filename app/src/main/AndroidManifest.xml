@@ -25,6 +25,10 @@
             android:name=".customer_detail.CustomerDetailActivity"
             android:label="@string/title_customer_detail">
         </activity>
+        <activity
+            android:name=".customer_modify.CustomerModifyActivity"
+            android:label="@string/title_customer_detail">
+        </activity>
     </application>
 
 </manifest>
