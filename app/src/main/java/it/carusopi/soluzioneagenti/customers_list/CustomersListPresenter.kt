@@ -15,8 +15,8 @@ import javax.inject.Inject
  */
 class CustomersListPresenter @Inject constructor(private var customerInteractor: CustomerInteractor): CustomersListContract.Presenter() {
 
-    var getCustomerDisposable: Disposable? = null
-    var getMoreCustomersDisposable: Disposable? = null
+    private var getCustomerDisposable: Disposable? = null
+    private var getMoreCustomersDisposable: Disposable? = null
 
     override fun loadCustomers() {
         getCustomerDisposable = customerInteractor.getCustomers()
@@ -60,11 +60,11 @@ class CustomersListPresenter @Inject constructor(private var customerInteractor:
     }
 
     override fun onCustomerSelected(customer: Customer) {
-        view?.openCustomerDetail()
+        view?.openCustomerDetail(customer)
     }
 
     override fun onAddCustomerClick() {
-        view?.openCustomerModify()
+        view?.openCustomerNew()
     }
 
     override fun detachView() {

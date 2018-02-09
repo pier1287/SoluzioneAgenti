@@ -22,12 +22,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".customer_detail.CustomerDetailActivity"
-            android:label="@string/title_customer_detail">
+            android:name=".customer_detail.CustomerDetailActivity">
         </activity>
         <activity
-            android:name=".customer_modify.CustomerModifyActivity"
-            android:label="@string/title_customer_detail">
+            android:name=".customer_modify.CustomerModifyActivity">
         </activity>
     </application>
 

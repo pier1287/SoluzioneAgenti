@@ -11,11 +11,12 @@ import it.carusopi.soluzioneagenti.R
 import it.carusopi.soluzioneagenti.base.BaseActivity
 import it.carusopi.soluzioneagenti.commons.recyclerview.EndlessRecyclerViewScrollListener
 import it.carusopi.soluzioneagenti.customer_detail.CustomerDetailActivity
+import it.carusopi.soluzioneagenti.customer_modify.CustomerModifyActivity
 import it.carusopi.soluzioneagenti.customers_list.di.CustomersListModule
 import it.carusopi.soluzioneagenti.customers_list.di.DaggerCustomersListComponent
+import it.carusopi.soluzioneagenti.data.model.Customer
 import it.carusopi.soluzioneagenti.data.model.CustomerPage
 import it.carusopi.soluzioneagenti.list.adapter.CustomersListAdapter
-import it.carusopi.soluzioneagenti.customer_modify.CustomerModifyActivity
 import kotlinx.android.synthetic.main.activity_customers_list.*
 import kotlinx.android.synthetic.main.toolbar_standard.*
 import javax.inject.Inject
@@ -57,7 +58,7 @@ class CustomersListActivity : BaseActivity(), CustomersListContract.View {
     private fun initView() {
         initToolbar()
         initRecycler()
-        RxView.clicks(fabAdd).subscribe{ presenter.onAddCustomerClick() }
+        RxView.clicks(fabAdd).subscribe { presenter.onAddCustomerClick() }
     }
 
     private fun initToolbar() {
@@ -121,11 +122,11 @@ class CustomersListActivity : BaseActivity(), CustomersListContract.View {
     override fun hideListEmpty() {
     }
 
-    override fun openCustomerDetail() {
-        CustomerDetailActivity.start(this)
+    override fun openCustomerDetail(customer: Customer) {
+        CustomerDetailActivity.start(this, customer)
     }
 
-    override fun openCustomerModify() {
+    override fun openCustomerNew() {
         CustomerModifyActivity.start(this)
     }
 }

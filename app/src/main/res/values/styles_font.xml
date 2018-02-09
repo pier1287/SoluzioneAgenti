@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme.TextAppearance.ActionBar.Title" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+    </style>
+
+    <style name="AppTheme.TextAppearance.ActionBar.Title.Expanded" parent="AppTheme.TextAppearance.ActionBar.Title">
+        <item name="android:textSize">34sp</item>
+    </style>
+
+</resources>

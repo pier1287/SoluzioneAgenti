@@ -7,7 +7,7 @@
     android:fitsSystemWindows="true"
     tools:context="it.carusopi.soluzioneagenti.customer_modify.CustomerModifyActivity">
 
-    <include layout="@layout/toolbar_collapsing"/>
+    <include layout="@layout/toolbar_standard"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

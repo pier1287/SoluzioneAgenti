@@ -15,7 +15,10 @@
         app:toolbarId="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        app:collapsedTitleTextAppearance="@style/AppTheme.TextAppearance.ActionBar.Title"
+        app:expandedTitleTextAppearance="@style/AppTheme.TextAppearance.ActionBar.Title.Expanded"
+        >
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
