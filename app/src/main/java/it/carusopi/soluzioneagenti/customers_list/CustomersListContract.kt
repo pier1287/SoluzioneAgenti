@@ -27,7 +27,7 @@ interface CustomersListContract {
         fun hideListError()
         fun showListEmpty()
         fun hideListEmpty()
-        fun openCustomerDetail()
-        fun openCustomerModify()
+        fun openCustomerDetail(customer: Customer)
+        fun openCustomerNew()
     }
 }
