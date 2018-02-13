@@ -1,12 +1,10 @@
-package it.carusopi.soluzioneagenti.data.interactor
+package it.carusopi.soluzioneagenti.data.interactor.customer
 
 import io.reactivex.Flowable
-import io.reactivex.Observable
 import it.carusopi.soluzioneagenti.data.model.Customer
 import it.carusopi.soluzioneagenti.data.model.CustomerPage
 import it.carusopi.soluzioneagenti.data.network.SoluzioneAgentiApiClient
 import javax.inject.Inject
-import javax.inject.Singleton
 
 /**
  * Created by carusopi on 23/11/2017.

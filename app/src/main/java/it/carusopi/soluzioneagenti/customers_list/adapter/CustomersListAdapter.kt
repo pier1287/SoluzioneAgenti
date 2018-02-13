@@ -13,6 +13,7 @@ import it.carusopi.soluzioneagenti.data.model.Customer
 import it.carusopi.soluzioneagenti.data.model.CustomerPage
 import kotlinx.android.synthetic.main.recycler_item_customer.view.*
 import kotlinx.android.synthetic.main.recycler_item_loader.view.*
+import java.util.*
 
 
 /**
@@ -23,12 +24,12 @@ class CustomersListAdapter(private var context: Context) :
 
     var onCustomerSelectedListener: ((Customer) -> Unit)? = null
 
-    private val customersList: MutableList<Customer> = mutableListOf()
+    private var customersList: MutableList<Customer> = mutableListOf()
     private var hasNextPage = false
 
     companion object {
-        val VIEW_TYPE_LOADING = 0
-        val VIEW_TYPE_ITEM = 1
+        const val VIEW_TYPE_LOADING = 0
+        const val VIEW_TYPE_ITEM = 1
     }
 
     override fun getItemCount(): Int = if (hasNextPage) customersList.size + 1 else customersList.size
@@ -52,7 +53,13 @@ class CustomersListAdapter(private var context: Context) :
         }
     }
 
-    fun addCustomers(customersPage: CustomerPage) {
+    fun loadCustomers(customersPage: CustomerPage) {
+        customersList = LinkedList(customersPage.customersList)
+        hasNextPage = customersPage.hasNextPage()
+        notifyDataSetChanged()
+    }
+
+    fun addMoreCustomers(customersPage: CustomerPage) {
         customersList.addAll(customersPage.customersList)
         hasNextPage = customersPage.hasNextPage()
         notifyDataSetChanged()

@@ -1,7 +1,8 @@
-package it.carusopi.soluzioneagenti.data.interactor
+package it.carusopi.soluzioneagenti.data.interactor.customer
 
 import io.reactivex.Flowable
 import io.realm.Realm
+import it.carusopi.soluzioneagenti.data.interactor.auth.AuthInteractor
 import it.carusopi.soluzioneagenti.data.model.Customer
 import it.carusopi.soluzioneagenti.data.model.CustomerPage
 import javax.inject.Inject
@@ -9,23 +10,16 @@ import javax.inject.Inject
 /**
  * Created by carusopi on 09/02/2018.
  */
-class CustomerInteractorRealm @Inject constructor(val realm: Realm) : CustomerInteractor {
+class CustomerInteractorRealm @Inject constructor(val authInteractor: AuthInteractor) : CustomerInteractor {
 
+    lateinit var realm: Realm
     override fun getCustomers(): Flowable<CustomerPage> {
-
-//        val customersRealm = realm.where(Customer::class.java)
-//                .findAllAsync().asIterable()
-//
-//        val customers = LinkedList<Customer>()
-//        customers.addAll(customersRealm)
-//
-//        return Observable.just(CustomerPage(customers , null))
-
+        realm = Realm.getInstance(authInteractor.realmSyncConfig)
         return realm.where(Customer::class.java)
                 .findAllAsync()
                 .asFlowable()
                 .filter { it.isLoaded }
-                .map{ CustomerPage(it, null)}
+                .map{ CustomerPage(it, null) }
     }
 
     override fun getMoreCustomers(): Flowable<CustomerPage> {
@@ -33,8 +27,9 @@ class CustomerInteractorRealm @Inject constructor(val realm: Realm) : CustomerIn
     }
 
     override fun saveCustomer(customer: Customer) {
-        realm.beginTransaction()
-        realm.copyToRealm(customer)
-        realm.commitTransaction()
+        val realm = Realm.getInstance(authInteractor.realmSyncConfig)
+        realm.executeTransaction({
+            it.insertOrUpdate(customer)
+        })
     }
 }

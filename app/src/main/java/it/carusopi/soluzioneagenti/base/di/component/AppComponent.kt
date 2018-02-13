@@ -5,7 +5,8 @@ import com.google.gson.Gson
 import dagger.Component
 import io.realm.Realm
 import it.carusopi.soluzioneagenti.base.di.module.*
-import it.carusopi.soluzioneagenti.data.interactor.CustomerInteractor
+import it.carusopi.soluzioneagenti.data.interactor.auth.AuthInteractor
+import it.carusopi.soluzioneagenti.data.interactor.customer.CustomerInteractor
 import it.carusopi.soluzioneagenti.data.network.SoluzioneAgentiApiClient
 import okhttp3.Cache
 import okhttp3.OkHttpClient
@@ -25,4 +26,5 @@ interface AppComponent {
     fun retrofit(): Retrofit
     fun apiClient(): SoluzioneAgentiApiClient
     fun interactorCustomer(): CustomerInteractor
+    fun interactorAuth(): AuthInteractor
 }

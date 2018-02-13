@@ -1,12 +1,11 @@
 package it.carusopi.soluzioneagenti.base.di.module
 
+import android.util.Log
 import dagger.Module
 import dagger.Provides
-import io.realm.Realm
-import io.realm.RealmConfiguration
+import io.realm.*
 import javax.inject.Singleton
-
-
+import io.realm.SyncUser.*
 
 
 /**
@@ -17,14 +16,8 @@ class RealmModule {
 
     @Provides
     @Singleton
-    fun provideRealmConfiguration(): RealmConfiguration {
-        var builder = RealmConfiguration.Builder()
-        return builder.build()
-    }
-
-    @Provides
-    fun provideRealm(realmConfiguration: RealmConfiguration): Realm {
-        return Realm.getInstance(realmConfiguration)
+    fun provideRealm(): Realm {
+        return Realm.getDefaultInstance()
     }
 
 }

@@ -1,4 +1,4 @@
-package it.carusopi.soluzioneagenti.data.interactor
+package it.carusopi.soluzioneagenti.data.interactor.customer
 
 import io.reactivex.Flowable
 import io.reactivex.Observable

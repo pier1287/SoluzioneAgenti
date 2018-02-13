@@ -5,7 +5,7 @@ import dagger.Provides
 import it.carusopi.soluzioneagenti.base.di.ActivityScope
 import it.carusopi.soluzioneagenti.customer_detail.CustomerDetailContract
 import it.carusopi.soluzioneagenti.customer_detail.CustomerDetailPresenter
-import it.carusopi.soluzioneagenti.data.interactor.CustomerInteractor
+import it.carusopi.soluzioneagenti.data.interactor.customer.CustomerInteractor
 
 /**
  * Created by carusopi on 24/11/2017.

@@ -18,8 +18,8 @@ interface CustomersListContract {
     }
 
     interface View: BaseView{
-        fun addCustomers(customerPage: CustomerPage)
-        fun showCustomers()
+        fun showCustomers(customerPage: CustomerPage)
+        fun addMoreCustomers(customerPage: CustomerPage)
         fun hideCustomers()
         fun showListLoading()
         fun hideListLoading()

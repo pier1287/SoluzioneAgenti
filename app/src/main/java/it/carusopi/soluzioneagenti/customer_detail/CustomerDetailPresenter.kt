@@ -1,6 +1,6 @@
 package it.carusopi.soluzioneagenti.customer_detail
 
-import it.carusopi.soluzioneagenti.data.interactor.CustomerInteractor
+import it.carusopi.soluzioneagenti.data.interactor.customer.CustomerInteractor
 import javax.inject.Inject
 
 /**

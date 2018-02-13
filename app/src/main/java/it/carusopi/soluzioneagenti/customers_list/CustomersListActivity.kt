@@ -90,16 +90,19 @@ class CustomersListActivity : BaseActivity(), CustomersListContract.View {
         presenter.attachView(this)
     }
 
-    override fun addCustomers(customerPage: CustomerPage) {
-        customersAdapter.addCustomers(customerPage)
+    override fun addMoreCustomers(customerPage: CustomerPage) {
+        customersAdapter.addMoreCustomers(customerPage)
     }
 
-    override fun showCustomers() {
+    override fun showCustomers(customerPage: CustomerPage) {
+        customersAdapter.loadCustomers(customerPage)
         recyclerCustomers.visibility = View.VISIBLE
+        fabAdd.visibility = View.VISIBLE
     }
 
     override fun hideCustomers() {
         recyclerCustomers.visibility = View.GONE
+        fabAdd.visibility = View.INVISIBLE
     }
 
     override fun showListLoading() {
