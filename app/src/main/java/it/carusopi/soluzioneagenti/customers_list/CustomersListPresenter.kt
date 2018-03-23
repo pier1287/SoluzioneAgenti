@@ -19,12 +19,13 @@ class CustomersListPresenter @Inject constructor(private var customerInteractor:
     private var getMoreCustomersDisposable: Disposable? = null
 
     override fun loadCustomers() {
-        getCustomerDisposable = customerInteractor.getCustomers()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        { onGetCustomersListSuccess(it) },
-                        { onGetCustomersListError(it) })
+        view?.showListLoading()
+        disposables.add(
+                customerInteractor.getCustomers()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(this::onGetCustomersListSuccess, this::onGetCustomersListError))
+
     }
 
     private fun onGetCustomersListError(ex: Throwable?) {
@@ -49,14 +50,11 @@ class CustomersListPresenter @Inject constructor(private var customerInteractor:
     }
 
     override fun loadMoreCustomers() {
-       getMoreCustomersDisposable = customerInteractor.getMoreCustomers()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        { customersPage -> customersPage.let { view?.addCustomers(customersPage) } },
-                        {
-//                            view?.showListError(R.string.err_generic)
-                        })
+        disposables.add(
+                customerInteractor.getMoreCustomers()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(this::onGetCustomersListSuccess, this::onGetCustomersListError))
     }
 
     override fun onCustomerSelected(customer: Customer) {
