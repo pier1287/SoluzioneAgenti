@@ -4,8 +4,14 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.StaggeredGridLayoutManager
+import android.view.View
+import io.reactivex.Observable
+import io.reactivex.subjects.PublishSubject
 
-abstract class EndlessRecyclerViewScrollListener : RecyclerView.OnScrollListener {
+
+data class RecyclerViewPage(val currentPage: Int = 0, val totalItemCount: Int = 0, val view: View? )
+
+class EndlessRecyclerViewScrollListener : RecyclerView.OnScrollListener {
     // The minimum amount of items to have below your current scroll position
     // before loading more.
     private var visibleThreshold = 8
@@ -17,6 +23,9 @@ abstract class EndlessRecyclerViewScrollListener : RecyclerView.OnScrollListener
     private var loading = true
     // Sets the starting page index
     private val startingPageIndex = 0
+
+    private val loadMoreSubject = PublishSubject.create<RecyclerViewPage>()
+    val loadMoreEvent : Observable<RecyclerViewPage> = loadMoreSubject
 
     internal var mLayoutManager: RecyclerView.LayoutManager
 
@@ -86,7 +95,7 @@ abstract class EndlessRecyclerViewScrollListener : RecyclerView.OnScrollListener
         // threshold should reflect how many total columns there are too
         if (!loading && lastVisibleItemPosition + visibleThreshold > totalItemCount) {
             currentPage++
-            onLoadMore(currentPage, totalItemCount, view)
+            loadMoreSubject.onNext(RecyclerViewPage(currentPage, totalItemCount, view))
             loading = true
         }
     }
@@ -98,7 +107,5 @@ abstract class EndlessRecyclerViewScrollListener : RecyclerView.OnScrollListener
         this.loading = true
     }
 
-    // Defines the process for actually loading more data based on page
-    abstract fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?)
 
 }

@@ -9,6 +9,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import com.facebook.drawee.view.SimpleDraweeView
 import it.carusopi.soluzioneagenti.R
+import it.carusopi.soluzioneagenti.commons.inflate
 import it.carusopi.soluzioneagenti.data.model.Customer
 import it.carusopi.soluzioneagenti.data.model.CustomerPage
 import kotlinx.android.synthetic.main.recycler_item_customer.view.*
@@ -18,18 +19,14 @@ import kotlinx.android.synthetic.main.recycler_item_loader.view.*
 /**
  * Created by carusopi on 30/10/2017.
  */
-class CustomersListAdapter(private var context: Context) :
+const val VIEW_TYPE_LOADING = 0
+const val VIEW_TYPE_ITEM = 1
+
+class CustomersListAdapter (private val customerClick: (Customer) -> Unit):
         RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    var onCustomerSelectedListener: ((Customer) -> Unit)? = null
-
-    private val customersList: MutableList<Customer> = mutableListOf()
+    private var customersList: List<Customer> = listOf()
     private var hasNextPage = false
-
-    companion object {
-        val VIEW_TYPE_LOADING = 0
-        val VIEW_TYPE_ITEM = 1
-    }
 
     override fun getItemCount(): Int = if (hasNextPage) customersList.size + 1 else customersList.size
 
@@ -42,31 +39,28 @@ class CustomersListAdapter(private var context: Context) :
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
-        if (viewType == VIEW_TYPE_ITEM) {
-            val view = LayoutInflater.from(context).inflate(R.layout.recycler_item_customer, parent, false)
-            return CustomerViewHolder(view)
-        } else {
-            val view = LayoutInflater.from(context).inflate(R.layout.recycler_item_loader, parent, false)
-            return LoaderViewHolder(view)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType){
+            VIEW_TYPE_LOADING -> LoaderViewHolder(parent.inflate(R.layout.recycler_item_loader))
+            else -> CustomerViewHolder(parent.inflate(R.layout.recycler_item_customer))
         }
     }
 
-    fun addCustomers(customersPage: CustomerPage) {
-        customersList.addAll(customersPage.customersList)
-        hasNextPage = customersPage.hasNextPage()
+    fun addCustomers(customersList: List<Customer>, hasMore: Boolean) {
+        this.customersList = customersList
+        hasNextPage = hasMore
         notifyDataSetChanged()
     }
 
     inner class CustomerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        val user: TextView = itemView.name
-        val avatar: SimpleDraweeView = itemView.imgAvatar
+        private val user: TextView = itemView.name
+        private val avatar: SimpleDraweeView = itemView.imgAvatar
 
         fun bind(item: Customer) {
             user.text = item.businessName
             avatar.setImageURI(item.avatarUrl)
-            onCustomerSelectedListener?.let { itemView.setOnClickListener { it(item) } }
+            itemView.setOnClickListener { customerClick.invoke(item) }
         }
     }
 

@@ -1,29 +1,29 @@
 package it.carusopi.soluzioneagenti.base
 
+import android.app.Activity
 import android.app.Application
 import com.facebook.drawee.backends.pipeline.Fresco
-import it.carusopi.soluzioneagenti.base.di.component.AppComponent
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasActivityInjector
+import it.carusopi.soluzioneagenti.base.di.AppInjector
 import it.carusopi.soluzioneagenti.base.di.component.DaggerAppComponent
-import it.carusopi.soluzioneagenti.base.di.module.AppModule
+import javax.inject.Inject
 
 /**
  * Created by carusopi on 27/10/2017.
  */
-class SoluzioneAgentiApp : Application() {
-
-    companion object {
-        @JvmStatic lateinit var appComponent: AppComponent
-    }
-
-    fun getAppcomponent(): AppComponent = SoluzioneAgentiApp.appComponent
+class SoluzioneAgentiApp : Application(), HasActivityInjector {
+    @Inject
+    lateinit var androidInjector: DispatchingAndroidInjector<Activity>
 
     override fun onCreate() {
         super.onCreate()
+
+        AppInjector(this)
+
         Fresco.initialize(this)
-        initDagger()
     }
 
-    private fun initDagger() {
-        appComponent = DaggerAppComponent.builder().appModule(AppModule(this)).build()
-    }
+    override fun activityInjector(): AndroidInjector<Activity> = androidInjector
 }

@@ -6,7 +6,7 @@ import javax.inject.Inject
 /**
  * Created by carusopi on 24/11/2017.
  */
-class CustomerDetailPresenter @Inject constructor(private var customerInteractor: CustomerInteractor):
+class CustomerDetailPresenter constructor(private var customerInteractor: CustomerInteractor):
         CustomerDetailContract.Presenter() {
 
 }

@@ -28,7 +28,7 @@ task clean(type: Delete) {
 
 ext{
     supportVersion      = "26.1.0"
-    daggerVersion       = "2.12"
+    daggerVersion       = "2.11"
     annotationVersion   = "10.0-b28"
     retrofitVersion     = "2.3.0"
     okhttpVersion       = "3.4.1"

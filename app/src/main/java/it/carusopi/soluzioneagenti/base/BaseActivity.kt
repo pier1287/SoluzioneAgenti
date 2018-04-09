@@ -12,10 +12,6 @@ abstract class BaseActivity : AppCompatActivity(), BaseView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        onActivityInject()
     }
 
-    protected abstract fun onActivityInject()
-
-    fun getAppcomponent(): AppComponent = SoluzioneAgentiApp.appComponent
 }
