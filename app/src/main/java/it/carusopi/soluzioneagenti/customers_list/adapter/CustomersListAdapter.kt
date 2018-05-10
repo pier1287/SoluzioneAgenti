@@ -1,8 +1,6 @@
 package it.carusopi.soluzioneagenti.list.adapter
 
-import android.content.Context
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
@@ -11,7 +9,6 @@ import com.facebook.drawee.view.SimpleDraweeView
 import it.carusopi.soluzioneagenti.R
 import it.carusopi.soluzioneagenti.commons.inflate
 import it.carusopi.soluzioneagenti.data.model.Customer
-import it.carusopi.soluzioneagenti.data.model.CustomerPage
 import kotlinx.android.synthetic.main.recycler_item_customer.view.*
 import kotlinx.android.synthetic.main.recycler_item_loader.view.*
 
@@ -19,20 +16,22 @@ import kotlinx.android.synthetic.main.recycler_item_loader.view.*
 /**
  * Created by carusopi on 30/10/2017.
  */
+
 const val VIEW_TYPE_LOADING = 0
 const val VIEW_TYPE_ITEM = 1
 
 class CustomersListAdapter (private val customerClick: (Customer) -> Unit):
         RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var customersList: List<Customer> = listOf()
+
+    private var customersList: MutableList<Customer> = mutableListOf()
     private var hasNextPage = false
 
     override fun getItemCount(): Int = if (hasNextPage) customersList.size + 1 else customersList.size
 
     override fun getItemViewType(position: Int): Int = if (position < (customersList.size)) VIEW_TYPE_ITEM else VIEW_TYPE_LOADING
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is CustomerViewHolder -> holder.bind(customersList[position])
             is LoaderViewHolder -> holder.progress.isIndeterminate = true
@@ -47,7 +46,7 @@ class CustomersListAdapter (private val customerClick: (Customer) -> Unit):
     }
 
     fun addCustomers(customersList: List<Customer>, hasMore: Boolean) {
-        this.customersList = customersList
+        this.customersList.addAll(customersList)
         hasNextPage = hasMore
         notifyDataSetChanged()
     }
