@@ -6,10 +6,7 @@ import android.os.Bundle
 import it.carusopi.soluzioneagenti.R
 import it.carusopi.soluzioneagenti.base.BaseActivity
 
-class CustomerModifyActivity : BaseActivity(), CustomerModifyContract.View {
-
-//    @Inject
-    lateinit var presenter: CustomerModifyContract.Presenter
+class CustomerModifyActivity : BaseActivity() {
 
     companion object {
         fun start(context: Context) {

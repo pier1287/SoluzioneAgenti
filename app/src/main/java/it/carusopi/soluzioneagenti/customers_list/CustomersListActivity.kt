@@ -23,7 +23,7 @@ class CustomersListActivity : BaseActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    lateinit var viewModel: CustomerListViewModel
+    private lateinit var viewModel: CustomerListViewModel
 
     private val compositeDisposable = CompositeDisposable()
 
@@ -90,7 +90,7 @@ class CustomersListActivity : BaseActivity() {
 
     private fun updateCustomers(data: Data<List<Customer>>?) {
         data?.let {
-            when (it) {
+            when (it.dataState) {
                 DataState.LOADING -> progressLoader.visibility = View.VISIBLE
                 DataState.SUCCESS -> progressLoader.visibility = View.INVISIBLE
                 DataState.ERROR -> progressLoader.visibility = View.INVISIBLE

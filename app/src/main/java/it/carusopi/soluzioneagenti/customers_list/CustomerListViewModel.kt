@@ -13,6 +13,7 @@ import it.carusopi.soluzioneagenti.data.interactor.CustomerInteractor
 import it.carusopi.soluzioneagenti.data.model.Customer
 import it.carusopi.soluzioneagenti.data.model.CustomerPage
 import it.carusopi.soluzioneagenti.data.model.exception.HttpNotFoundException
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 /**
@@ -25,19 +26,16 @@ class CustomerListViewModel @Inject constructor(private var customerInteractor: 
     private val compositeDisposable = CompositeDisposable()
 
     fun loadCustomers() {
+        customers.postValue(Data(DataState.LOADING))
+
         compositeDisposable.add(customerInteractor.getCustomers()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ customers.postValue(Data(DataState.SUCCESS, it.customersList, it.hasNextPage())) },
-                        this::onGetCustomersListError))
+                .subscribe(this::onGetCustomerList, this::onGetCustomersListError))
     }
 
-    fun loadMoreCustomers() {
-        compositeDisposable.add(customerInteractor.getMoreCustomers()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ customers.postValue(Data(DataState.SUCCESS, it.customersList, it.hasNextPage())) },
-                        this::onGetCustomersListError))
+    private fun onGetCustomerList(customerPage: CustomerPage){
+        customers.postValue( Data(DataState.SUCCESS, customerPage.customersList, customerPage.hasNextPage()) )
     }
 
     private fun onGetCustomersListError(ex: Throwable?) {
@@ -50,6 +48,14 @@ class CustomerListViewModel @Inject constructor(private var customerInteractor: 
             }
         }
         Log.e("", "", ex)
+    }
+
+    fun loadMoreCustomers() {
+        compositeDisposable.add(customerInteractor.getMoreCustomers()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ customers.postValue(Data(DataState.SUCCESS, it.customersList, it.hasNextPage())) },
+                        this::onGetCustomersListError))
     }
 
     override fun onCleared() {
