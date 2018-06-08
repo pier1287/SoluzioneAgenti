@@ -11,11 +11,11 @@ import kotlinx.android.parcel.Parcelize
 @SuppressLint("ParcelCreator")
 @Parcelize
 data class Customer(
+        @SerializedName("id") val id: Long,
         @SerializedName("business_name") val businessName: String? = null,
-        @SerializedName("cap") val cap: Int? = null,
+        @SerializedName("postal_code") val cap: Int? = null,
         @SerializedName("city") val city: String? = null,
         @SerializedName("email") val email: String? = null,
-        @SerializedName("telephone") val telephone: String? = null,
-        @SerializedName("mobile") val mobile: String? = null,
-        @SerializedName("address") val address: String? = null,
-        @SerializedName("avatar_url") val avatarUrl: String? = null ) : Parcelable
+        @SerializedName("phone") val phone: String? = null,
+        @SerializedName("cell") val mobile: String? = null,
+        @SerializedName("address") val address: String? = null) : Parcelable

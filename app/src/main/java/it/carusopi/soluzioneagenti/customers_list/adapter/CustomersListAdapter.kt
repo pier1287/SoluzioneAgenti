@@ -58,7 +58,6 @@ class CustomersListAdapter (private val customerClick: (Customer) -> Unit):
 
         fun bind(item: Customer) {
             user.text = item.businessName
-            avatar.setImageURI(item.avatarUrl)
             itemView.setOnClickListener { customerClick.invoke(item) }
         }
     }

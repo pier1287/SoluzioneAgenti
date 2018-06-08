@@ -1,10 +1,10 @@
 package it.carusopi.soluzioneagenti.data.interactor
 
 import io.reactivex.Observable
+import it.carusopi.soluzioneagenti.data.model.Customer
 import it.carusopi.soluzioneagenti.data.model.CustomerPage
 import it.carusopi.soluzioneagenti.data.network.SoluzioneAgentiApiClient
 import javax.inject.Inject
-import javax.inject.Singleton
 
 /**
  * Created by carusopi on 23/11/2017.
@@ -28,5 +28,9 @@ class CustomerInteractorImpl @Inject constructor(private var soluzioneAgentiApiC
                 it
             }
         } ?: Observable.just(CustomerPage(emptyList(), null))
+    }
+
+    override fun getCustomerDetails(id: Long): Observable<Customer> {
+        return soluzioneAgentiApiClient.getCustomerDetail(id)
     }
 }

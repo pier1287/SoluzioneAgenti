@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import it.carusopi.soluzioneagenti.R
 import it.carusopi.soluzioneagenti.base.BaseActivity
+import it.carusopi.soluzioneagenti.base.withViewModel
 import it.carusopi.soluzioneagenti.data.model.Customer
 import kotlinx.android.synthetic.main.toolbar_collapsing.*
 import javax.inject.Inject
@@ -18,7 +19,7 @@ class CustomerDetailActivity : BaseActivity(){
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private lateinit var customer: Customer
+    private lateinit var customerExtra: Customer
 
     companion object {
         private const val ARG_CUSTOMER = "ARG_CUSTOMER"
@@ -37,10 +38,14 @@ class CustomerDetailActivity : BaseActivity(){
 
         setContentView(R.layout.activity_customer_detail)
         initView()
+
+        withViewModel<CustomerDetailViewModel>(viewModelFactory) {
+            loadCustomerDetails(customerExtra.id)
+        }
     }
 
     private fun getExtra() {
-        customer = intent.getParcelableExtra(ARG_CUSTOMER)
+        customerExtra = intent.getParcelableExtra(ARG_CUSTOMER)
     }
 
     private fun initView() {
@@ -49,6 +54,6 @@ class CustomerDetailActivity : BaseActivity(){
 
     private fun initToolbar() {
         setSupportActionBar(toolbar)
-        toolbar_layout.title = customer.businessName
+        toolbar_layout.title = customerExtra.businessName
     }
 }

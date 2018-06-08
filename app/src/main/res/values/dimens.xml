@@ -7,7 +7,18 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
 
+    <dimen name="font_small">13sp</dimen>
+    <dimen name="font_normal">16sp</dimen>
+    <dimen name="font_big">20sp</dimen>
+
+    <dimen name="font_title_small">24sp</dimen>
+    <dimen name="font_title_normal">30sp</dimen>
+    <dimen name="font_title_big">38sp</dimen>
+
     <dimen name="card_view_list_elevation">2dp</dimen>
     <dimen name="card_view_list_radius">3dp</dimen>
     <dimen name="card_view_list_side_margin">5dp</dimen>
+
+    <dimen name="image_action_small">32dp</dimen>
+
 </resources>

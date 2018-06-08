@@ -18,21 +18,52 @@
         tools:context="it.carusopi.soluzioneagenti.customer_detail.CustomerDetailActivity"
         tools:showIn="@layout/activity_customer_detail">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin"
-            android:text="Ciao" />
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/btnCall"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/call"
+                android:drawableTop="@drawable/ic_call_24dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/btnMail"
+                style="@style/AppTheme.Button.Image"/>
+
+            <Button
+                android:id="@+id/btnMail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/send_mail"
+                android:drawableTop="@drawable/ic_mail_outline_24dp"
+                app:layout_constraintEnd_toStartOf="@+id/btnNavigate"
+                app:layout_constraintStart_toEndOf="@+id/btnCall"
+                style="@style/AppTheme.Button.Image"
+                />
+
+            <Button
+                android:id="@+id/btnNavigate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/navigate"
+                android:drawableTop="@drawable/ic_directions_24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btnMail"
+                style="@style/AppTheme.Button.Image"/>
+
+        </android.support.constraint.ConstraintLayout>
 
     </android.support.v4.widget.NestedScrollView>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        app:layout_anchor="@id/app_bar"
-        app:layout_anchorGravity="bottom|end"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+    <!--<android.support.design.widget.FloatingActionButton-->
+        <!--android:id="@+id/fab"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_margin="@dimen/fab_margin"-->
+        <!--app:layout_anchor="@id/app_bar"-->
+        <!--app:layout_anchorGravity="bottom|end"-->
+        <!--app:srcCompat="@android:drawable/ic_dialog_email" />-->
 
 </android.support.design.widget.CoordinatorLayout>
